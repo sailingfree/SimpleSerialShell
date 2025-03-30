@@ -4,6 +4,7 @@
 
 #ifndef SIMPLE_SERIAL_SHELL_BUFSIZE
 #define SIMPLE_SERIAL_SHELL_BUFSIZE 88
+#define SIMPLE_SERIAL_SHELL_HISTORY_SIZE 32
 #endif
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -51,6 +52,8 @@ class SimpleSerialShell : public Stream {
         int execute( const char aCommandString[]);  // shell.execute("echo hello world");
 
         static int printHelp(int argc, char **argv);
+
+        static int printHistory(int, char **);
 
         void resetBuffer(void);
 
@@ -102,6 +105,9 @@ class SimpleSerialShell : public Stream {
         static Command * firstCommand;
 
         TokenizerFunction tokenizer;
+
+        char historyBuf[SIMPLE_SERIAL_SHELL_BUFSIZE][SIMPLE_SERIAL_SHELL_HISTORY_SIZE];
+        uint32_t historyPos;
 };
 
 ////////////////////////////////////////////////////////////////////////////////
